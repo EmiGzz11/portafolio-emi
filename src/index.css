@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+/* Reseteo básico para asegurar que nada bloquee el ancho total */
+@layer base {
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    /* Evita el scroll horizontal rebelde */
+    background-color: #030712;
+    /* Equivale a bg-gray-950 */
+  }
+
+  /* Suaviza el scroll cuando haces clic en los enlaces del Navbar */
+  html {
+    scroll-behavior: smooth;
+  }
+}
