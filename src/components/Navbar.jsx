@@ -20,6 +20,7 @@ const Navbar = () => {
                         className="px-5 py-2.5 bg-gray-900 border border-gray-800 rounded-xl text-gray-100 hover:border-cyan-500 hover:text-white transition-all">
                         Contacto
                     </a>
+
                 </div>
                 <button
                     onClick={toggleMenu}

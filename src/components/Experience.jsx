@@ -30,7 +30,6 @@ const Experience = () => {
                     </div>
                 </div>
 
-                {/* Espacio para una foto profesional o un gráfico de tus lenguajes más usados */}
                 <div className="relative group">
                     <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
                     <div className="relative bg-gray-900 rounded-2xl p-8 border border-white/5">
