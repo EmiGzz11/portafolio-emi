@@ -15,15 +15,16 @@ const obtenerTasa = (pct) => {
 const siguienteTier = (pct) => TIERS.find((t) => t > pct) ?? null;
 
 const CATALOGO = {
-  HRV:     { label: 'HR-V',    img: '/src/assets/honda_hrv.png',     versiones: [{ nombre: 'UNIQ CVT', precio: 570600, bono: 0 }, { nombre: 'SPORT', precio: 608900, bono: 60000 }, { nombre: 'TOURING', precio: 636800, bono: 60000 }] },
-  CRV:     { label: 'CR-V',    img: '/src/assets/honda_crv.png',     versiones: [{ nombre: 'TURBO PLUS', precio: 768300, bono: 60000 }, { nombre: 'TOURING', precio: 811500, bono: 60000 }, { nombre: 'TOURING HEV', precio: 894700, bono: 50000 }, { nombre: 'SPORT TOURING HEV', precio: 920800, bono: 50000 }] },
-  CIVIC:   { label: 'Civic',   img: '/src/assets/honda_civic.png',   versiones: [{ nombre: 'I STYLE', precio: 564900, bono: 40000 }, { nombre: 'SPORT HEV', precio: 662400, bono: 30000 }, { nombre: 'TOURING HEV', precio: 708600, bono: 30000 }] },
-  CITY:    { label: 'City',    img: '/src/assets/honda_city.png',    versiones: [{ nombre: 'SPORT', precio: 382500, bono: 40000 }, { nombre: 'PRIME', precio: 411600, bono: 40000 }, { nombre: 'TOURING', precio: 441200, bono: 40000 }] },
-  BRV:     { label: 'BR-V',    img: '/src/assets/honda_brv.png',     versiones: [{ nombre: 'UNIQ', precio: 464500, bono: 10000 }, { nombre: 'TOURING', precio: 502700, bono: 40000 }] },
-  ODYSSEY: { label: 'Odyssey', img: '/src/assets/honda_odyssey.png', versiones: [{ nombre: 'TOURING', precio: 1120000, bono: 90000 }, { nombre: 'BLACK EDITION', precio: 1147900, bono: 90000 }] },
+  HRV: { label: 'HR-V 2026', img: '/src/assets/honda_hrv.png', versiones: [{ nombre: 'UNIQ CVT', precio: 570600, bono: 0 }, { nombre: 'SPORT', precio: 608900, bono: 60000 }, { nombre: 'TOURING', precio: 636800, bono: 60000 }] },
+  HRV27: { label: 'HR-V 2027', img: '/src/assets/honda_hrv.png', versiones: [{ nombre: 'UNIQ CVT', precio: 572500, bono: 30000 }, { nombre: 'SPORT', precio: 609800, bono: 40000 }, { nombre: 'TOURING', precio: 637700, bono: 50000 }] },
+  CRV: { label: 'CR-V', img: '/src/assets/honda_crv.png', versiones: [{ nombre: 'TURBO PLUS', precio: 768300, bono: 30000 }, { nombre: 'TOURING', precio: 811500, bono: 70000 }, { nombre: 'TOURING HEV', precio: 894700, bono: 50000 }, { nombre: 'SPORT TOURING HEV', precio: 920800, bono: 65000 }] },
+  CIVIC: { label: 'Civic', img: '/src/assets/honda_civic.png', versiones: [{ nombre: 'I STYLE', precio: 564900, bono: 40000 }, { nombre: 'SPORT HEV', precio: 662400, bono: 30000 }, { nombre: 'TOURING HEV', precio: 708600, bono: 30000 }] },
+  CITY: { label: 'City', img: '/src/assets/honda_city.png', versiones: [{ nombre: 'SPORT', precio: 382500, bono: 40000 }, { nombre: 'PRIME', precio: 411600, bono: 40000 }, { nombre: 'TOURING', precio: 441200, bono: 40000 }] },
+  BRV: { label: 'BR-V', img: '/src/assets/honda_brv.png', versiones: [{ nombre: 'UNIQ', precio: 464500, bono: 10000 }, { nombre: 'TOURING', precio: 502700, bono: 50000 }] },
+  ODYSSEY: { label: 'Odyssey', img: '/src/assets/honda_odyssey.png', versiones: [{ nombre: 'TOURING', precio: 1120000, bono: 110000 }, { nombre: 'BLACK EDITION', precio: 1147900, bono: 110000 }] },
   PRELUDE: { label: 'Prelude', img: '/src/assets/honda_prelude.png', versiones: [{ nombre: 'HYBRID', precio: 884400, bono: 0 }] },
-  ACCORD:  { label: 'Accord',  img: '/src/assets/honda_accord.png',  versiones: [{ nombre: 'TOURING', precio: 871400, bono: 0 }] },
-  PILOT:   { label: 'Pilot',   img: '/src/assets/honda_pilot.png',   versiones: [{ nombre: 'TOURING', precio: 1155400, bono: 0 }, { nombre: 'BLACK EDITION', precio: 1183300, bono: 0 }] },
+  ACCORD: { label: 'Accord', img: '/src/assets/honda_accord.png', versiones: [{ nombre: 'TOURING', precio: 871400, bono: 60000 }] },
+  PILOT: { label: 'Pilot', img: '/src/assets/honda_pilot.png', versiones: [{ nombre: 'TOURING', precio: 1155400, bono: 50000 }, { nombre: 'BLACK EDITION', precio: 1183300, bono: 50000 }] },
 };
 
 const mxn = (n) => n.toLocaleString('es-MX', { style: 'currency', currency: 'MXN', maximumFractionDigits: 0 });
@@ -34,14 +35,14 @@ function calcular(precio, bono, enganche) {
   const precioConBono = precio - bono;
   const pctA = precioConBono > 0 ? (enganche / precioConBono) * 100 : 0;
   const tasaA = obtenerTasa(pctA);
-  const sigA  = siguienteTier(pctA);
+  const sigA = siguienteTier(pctA);
   const faltaA = sigA ? Math.max(0, (precioConBono * sigA / 100) - enganche) : 0;
 
   // Escenario B: bono suma al enganche del cliente
   const engancheTotal = enganche + bono;
-  const pctB  = (engancheTotal / precio) * 100;
+  const pctB = (engancheTotal / precio) * 100;
   const tasaB = obtenerTasa(pctB);
-  const sigB  = siguienteTier(pctB);
+  const sigB = siguienteTier(pctB);
   const faltaB = sigB ? Math.max(0, (precio * sigB / 100) - engancheTotal) : 0;
 
   // Determinar ganador: menor tasa, o si son iguales → enganche (más flexibilidad)
@@ -55,16 +56,16 @@ function calcular(precio, bono, enganche) {
 
 // ─── Componente ────────────────────────────────────────────────────────────
 export default function HondaCalculator() {
-  const [unidadKey, setUnidadKey]   = useState('CRV');
+  const [unidadKey, setUnidadKey] = useState('CRV');
   const [versionIdx, setVersionIdx] = useState(0);
-  const [enganche, setEnganche]     = useState(150000);
-  const [imgErr, setImgErr]         = useState({});
+  const [enganche, setEnganche] = useState(150000);
+  const [imgErr, setImgErr] = useState({});
 
   useEffect(() => setVersionIdx(0), [unidadKey]);
 
-  const unidad  = CATALOGO[unidadKey];
+  const unidad = CATALOGO[unidadKey];
   const version = unidad.versiones[versionIdx];
-  const res     = calcular(version.precio, version.bono, enganche);
+  const res = calcular(version.precio, version.bono, enganche);
   const minEnganche = Math.ceil(version.precio * 0.1);
 
   const engancheValido = enganche >= minEnganche;
@@ -137,7 +138,7 @@ export default function HondaCalculator() {
 
             {/* Resumen rápido */}
             <div style={S.summaryBox}>
-              <Row label="% con bono al precio"   val={`${res.pctA.toFixed(1)}%`} />
+              <Row label="% con bono al precio" val={`${res.pctA.toFixed(1)}%`} />
               <Row label="% con bono al enganche" val={`${res.pctB.toFixed(1)}%`} cyan />
             </div>
           </div>
@@ -321,50 +322,50 @@ function Recomendacion({ res, version, enganche }) {
 
 // ─── Estilos ────────────────────────────────────────────────────────────────
 const S = {
-  page:      { minHeight: '100vh', background: '#060610', color: '#f1f5f9', padding: '36px 16px 80px', fontFamily: "'Inter','Segoe UI',sans-serif" },
-  wrap:      { maxWidth: 1120, margin: '0 auto' },
-  header:    { display: 'flex', alignItems: 'center', gap: 18, marginBottom: 36 },
-  redBar:    { width: 5, height: 50, borderRadius: 3, background: 'linear-gradient(#ef4444,#dc2626)', flexShrink: 0 },
-  h1:        { fontSize: 'clamp(20px,3.5vw,30px)', fontWeight: 900, letterSpacing: '-0.03em', margin: 0, textTransform: 'uppercase' },
-  sub:       { color: '#475569', fontSize: 13, marginTop: 4 },
-  step:      { fontSize: 11, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#475569', margin: '28px 0 10px' },
+  page: { minHeight: '100vh', background: '#060610', color: '#f1f5f9', padding: '36px 16px 80px', fontFamily: "'Inter','Segoe UI',sans-serif" },
+  wrap: { maxWidth: 1120, margin: '0 auto' },
+  header: { display: 'flex', alignItems: 'center', gap: 18, marginBottom: 36 },
+  redBar: { width: 5, height: 50, borderRadius: 3, background: 'linear-gradient(#ef4444,#dc2626)', flexShrink: 0 },
+  h1: { fontSize: 'clamp(20px,3.5vw,30px)', fontWeight: 900, letterSpacing: '-0.03em', margin: 0, textTransform: 'uppercase' },
+  sub: { color: '#475569', fontSize: 13, marginTop: 4 },
+  step: { fontSize: 11, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#475569', margin: '28px 0 10px' },
 
-  unitGrid:  { display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(100px,1fr))', gap: 8 },
-  unitBtn:   { position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, padding: '12px 6px 10px', borderRadius: 14, border: '1.5px solid #1e293b', background: '#0f172a', cursor: 'pointer', outline: 'none', transition: 'all 0.18s' },
-  unitOn:    { border: '1.5px solid #ef4444', background: 'rgba(239,68,68,0.08)', boxShadow: '0 0 18px rgba(239,68,68,0.14)' },
-  unitImg:   { width: '100%', maxWidth: 84, height: 50, objectFit: 'contain', filter: 'drop-shadow(0 2px 6px rgba(0,0,0,.6))' },
-  imgBox:    { width: 84, height: 50, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#1e293b', borderRadius: 6, fontSize: 24 },
-  unitLbl:   { fontSize: 11, fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: '#64748b' },
+  unitGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(100px,1fr))', gap: 8 },
+  unitBtn: { position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, padding: '12px 6px 10px', borderRadius: 14, border: '1.5px solid #1e293b', background: '#0f172a', cursor: 'pointer', outline: 'none', transition: 'all 0.18s' },
+  unitOn: { border: '1.5px solid #ef4444', background: 'rgba(239,68,68,0.08)', boxShadow: '0 0 18px rgba(239,68,68,0.14)' },
+  unitImg: { width: '100%', maxWidth: 84, height: 50, objectFit: 'contain', filter: 'drop-shadow(0 2px 6px rgba(0,0,0,.6))' },
+  imgBox: { width: 84, height: 50, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#1e293b', borderRadius: 6, fontSize: 24 },
+  unitLbl: { fontSize: 11, fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: '#64748b' },
 
-  verGrid:   { display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(168px,1fr))', gap: 8 },
-  verBtn:    { display: 'flex', flexDirection: 'column', gap: 4, padding: '12px 14px', borderRadius: 12, border: '1.5px solid #1e293b', background: '#0f172a', cursor: 'pointer', textAlign: 'left', outline: 'none', transition: 'all 0.18s' },
-  verOn:     { border: '1.5px solid #38bdf8', background: 'rgba(56,189,248,0.07)', boxShadow: '0 0 14px rgba(56,189,248,0.12)' },
+  verGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(168px,1fr))', gap: 8 },
+  verBtn: { display: 'flex', flexDirection: 'column', gap: 4, padding: '12px 14px', borderRadius: 12, border: '1.5px solid #1e293b', background: '#0f172a', cursor: 'pointer', textAlign: 'left', outline: 'none', transition: 'all 0.18s' },
+  verOn: { border: '1.5px solid #38bdf8', background: 'rgba(56,189,248,0.07)', boxShadow: '0 0 14px rgba(56,189,248,0.12)' },
   verNombre: { fontSize: 11, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: '#94a3b8' },
   verPrecio: { fontSize: 16, fontWeight: 800, color: '#f1f5f9', letterSpacing: '-0.02em' },
-  badge:     { fontSize: 10, fontWeight: 600, color: '#4ade80', background: 'rgba(74,222,128,0.12)', padding: '2px 7px', borderRadius: 99, alignSelf: 'flex-start' },
+  badge: { fontSize: 10, fontWeight: 600, color: '#4ade80', background: 'rgba(74,222,128,0.12)', padding: '2px 7px', borderRadius: 99, alignSelf: 'flex-start' },
 
-  mainGrid:  { display: 'grid', gridTemplateColumns: '380px 1fr', gap: 18, alignItems: 'start' },
-  panel:     { background: 'rgba(15,23,42,0.7)', border: '1.5px solid #1e293b', borderRadius: 22, padding: 24 },
-  fieldGroup:{ marginBottom: 18 },
-  lbl:       { display: 'block', fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#475569', marginBottom: 7 },
-  readOnly:  { background: '#070712', border: '1.5px solid #1e293b', borderRadius: 10, padding: '12px 14px', fontSize: 21, fontWeight: 800, letterSpacing: '-0.02em', color: '#f1f5f9' },
-  input:     { width: '100%', boxSizing: 'border-box', background: '#020617', border: '1.5px solid #334155', borderRadius: 10, padding: '12px 14px', fontSize: 20, fontWeight: 700, color: '#f1f5f9', fontFamily: 'inherit', outline: 'none' },
-  inputError:{ borderColor: '#ef4444' },
-  errorMsg:  { fontSize: 12, color: '#f87171', marginTop: 6 },
-  summaryBox:{ background: '#0a0f1e', borderRadius: 10, padding: '10px 14px', display: 'flex', flexDirection: 'column', gap: 0 },
+  mainGrid: { display: 'grid', gridTemplateColumns: '380px 1fr', gap: 18, alignItems: 'start' },
+  panel: { background: 'rgba(15,23,42,0.7)', border: '1.5px solid #1e293b', borderRadius: 22, padding: 24 },
+  fieldGroup: { marginBottom: 18 },
+  lbl: { display: 'block', fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#475569', marginBottom: 7 },
+  readOnly: { background: '#070712', border: '1.5px solid #1e293b', borderRadius: 10, padding: '12px 14px', fontSize: 21, fontWeight: 800, letterSpacing: '-0.02em', color: '#f1f5f9' },
+  input: { width: '100%', boxSizing: 'border-box', background: '#020617', border: '1.5px solid #334155', borderRadius: 10, padding: '12px 14px', fontSize: 20, fontWeight: 700, color: '#f1f5f9', fontFamily: 'inherit', outline: 'none' },
+  inputError: { borderColor: '#ef4444' },
+  errorMsg: { fontSize: 12, color: '#f87171', marginTop: 6 },
+  summaryBox: { background: '#0a0f1e', borderRadius: 10, padding: '10px 14px', display: 'flex', flexDirection: 'column', gap: 0 },
 
-  resultsCol:{ display: 'flex', flexDirection: 'column', gap: 14 },
-  scenCard:  { borderWidth: 2, borderStyle: 'solid', borderRadius: 18, padding: '18px 20px', transition: 'all 0.3s ease' },
+  resultsCol: { display: 'flex', flexDirection: 'column', gap: 14 },
+  scenCard: { borderWidth: 2, borderStyle: 'solid', borderRadius: 18, padding: '18px 20px', transition: 'all 0.3s ease' },
   scenTitle: { fontSize: 13, fontWeight: 800, letterSpacing: '0.06em', textTransform: 'uppercase', margin: '0 0 2px' },
-  scenDesc:  { fontSize: 12, color: '#64748b', margin: '0 0 2px' },
-  scenLbl:   { fontSize: 11, color: '#475569', margin: 0 },
-  upsell:    { marginTop: 10, background: 'rgba(234,179,8,0.08)', border: '1px solid rgba(234,179,8,0.25)', borderRadius: 10, padding: '10px 13px', fontSize: 12, color: '#fde68a', lineHeight: 1.6 },
+  scenDesc: { fontSize: 12, color: '#64748b', margin: '0 0 2px' },
+  scenLbl: { fontSize: 11, color: '#475569', margin: 0 },
+  upsell: { marginTop: 10, background: 'rgba(234,179,8,0.08)', border: '1px solid rgba(234,179,8,0.25)', borderRadius: 10, padding: '10px 13px', fontSize: 12, color: '#fde68a', lineHeight: 1.6 },
 
-  alertBox:  { background: 'rgba(239,68,68,0.08)', border: '1.5px solid rgba(239,68,68,0.3)', borderRadius: 18, padding: '20px 22px' },
-  alertTitle:{ fontSize: 16, fontWeight: 800, color: '#ef4444', margin: '0 0 8px' },
+  alertBox: { background: 'rgba(239,68,68,0.08)', border: '1.5px solid rgba(239,68,68,0.3)', borderRadius: 18, padding: '20px 22px' },
+  alertTitle: { fontSize: 16, fontWeight: 800, color: '#ef4444', margin: '0 0 8px' },
   alertDesc: { fontSize: 13, color: '#fca5a5', lineHeight: 1.7, margin: 0 },
 
   recoBox: (c) => ({ background: `${c}10`, border: `1.5px solid ${c}40`, borderRadius: 16, padding: '16px 20px' }),
   recoTitle: { fontSize: 14, fontWeight: 800, margin: '0 0 8px' },
-  recoDesc:  { fontSize: 13, color: '#94a3b8', lineHeight: 1.75, margin: 0 },
+  recoDesc: { fontSize: 13, color: '#94a3b8', lineHeight: 1.75, margin: 0 },
 };
